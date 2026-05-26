@@ -1,10 +1,12 @@
-# Peer Lending
-Pulse uses community signals and machine-driven risk models to deliver affordable micro‑credit with startup speed.
+Accesso Ancla – Peer Lending
+Accesso Ancla utiliza señales comunitarias y modelos de riesgo impulsados por máquina para ofrecer micro‑créditos accesibles con la velocidad de una startup.
 
-## Decisioning Feature Program
-Architects, Engineers, and Stakeholders collaborate to plan, design, develop, and test the decisioning capabilities that strengthen P2P lending outcomes.
+Programa de Capacidades de Decisión
+Arquitectos, Ingenieros y Stakeholders colaboran para planificar, diseñar, desarrollar y probar las capacidades de decisión que fortalecen los resultados del préstamo P2P.
 
-Current feature tracks:
-- Borrower Risk Scoring
-- Collateralization Framework
-- Payback Stimulation Engine
+Rutas de desarrollo actuales:
+Evaluación de Riesgo del Prestatario
+
+Marco de Colateralización
+
+Motor de Simulación de Pagos
