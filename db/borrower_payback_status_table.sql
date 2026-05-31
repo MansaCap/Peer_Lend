@@ -1,4 +1,22 @@
-CREATE TABLE borrower_payback_status (
+CREATE DATABASE IF NOT EXISTS fintech;
+USE fintech;
+
+CREATE TABLE IF NOT EXISTS users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS loans (
+    loan_id INT AUTO_INCREMENT PRIMARY KEY,
+    borrower_id INT NOT NULL,
+    principal_amount DECIMAL(12,2) NOT NULL,
+    status ENUM('open','closed','defaulted') DEFAULT 'open',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_loans_borrower FOREIGN KEY (borrower_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE IF NOT EXISTS borrower_payback_status (
     status_id          INT AUTO_INCREMENT PRIMARY KEY,
     loan_id            INT NOT NULL,
     borrower_id        INT NOT NULL,
