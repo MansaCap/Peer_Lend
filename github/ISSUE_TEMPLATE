@@ -1,0 +1,20 @@
+## Objective
+Clearly state the purpose of this issue.  
+Example: Implement borrower risk scoring engine for Pulse Lending MVP.
+
+## Tasks
+- [ ] List the specific steps required
+- [ ] Example: Define scoring inputs (income stability, cashflow surplus, repayment history, collateral strength, social trust)
+- [ ] Example: Implement scoring function (0–100 scale)
+- [ ] Example: Integrate PD (probability of default) calculation
+- [ ] Example: Store scores in MySQL schema
+- [ ] Example: Expose API route `/credit/score` in FastAPI
+
+## Acceptance Criteria
+- [ ] What must be true for this issue to be considered complete?
+- [ ] Example: Borrower score is calculated and stored in DB
+- [ ] Example: API returns score and PD for given borrower
+- [ ] Example: Unit tests validate scoring logic with sample data
+
+## References
+(Optional) Link to related docs, PRs, or external resources.
