@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from urllib.parse import quote_plus
+import tomllib
 
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import SQLAlchemyError
@@ -20,6 +21,28 @@ def read_dotenv(path: Path) -> None:
             os.environ[key] = value
 
 
+def read_env_toml(path: Path) -> None:
+    if not path.exists():
+        return
+
+    with path.open("rb") as handle:
+        data = tomllib.load(handle)
+
+    mysql_section = data.get("mysql", {}) if isinstance(data, dict) else {}
+    mapping = {
+        "MYSQL_HOST": mysql_section.get("host", data.get("MYSQL_HOST") if isinstance(data, dict) else None),
+        "MYSQL_PORT": mysql_section.get("port", data.get("MYSQL_PORT") if isinstance(data, dict) else None),
+        "MYSQL_USER": mysql_section.get("user", data.get("MYSQL_USER") if isinstance(data, dict) else None),
+        "MYSQL_PASSWORD": mysql_section.get("password", data.get("MYSQL_PASSWORD") if isinstance(data, dict) else None),
+        "MYSQL_DATABASE": mysql_section.get("database", data.get("MYSQL_DATABASE") if isinstance(data, dict) else None),
+    }
+
+    for key, value in mapping.items():
+        if value is None or key in os.environ:
+            continue
+        os.environ[key] = str(value)
+
+
 def mysql_server_url() -> str:
     user = os.getenv("MYSQL_USER", "root")
     password = quote_plus(os.getenv("MYSQL_PASSWORD", ""))
@@ -37,6 +60,7 @@ def execute_sql_script(conn, sql_text: str) -> None:
 def main() -> None:
     repo_root = Path(__file__).resolve().parents[1]
     read_dotenv(repo_root / ".env")
+    read_env_toml(repo_root / ".env.toml")
 
     db_name = os.getenv("MYSQL_DATABASE", "fintech")
     engine = create_engine(mysql_server_url(), future=True)
@@ -100,7 +124,7 @@ def main() -> None:
             ).fetchall()
     except SQLAlchemyError as exc:
         print("Failed to apply schema.")
-        print("Check MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE in .env")
+        print("Check MYSQL_* values in .env or .env.toml")
         print(f"Error: {exc}")
         raise SystemExit(1)
 
