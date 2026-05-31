@@ -1,10 +1,30 @@
-# Peer Lending
-Pulse uses community signals and machine-driven risk models to deliver affordable micro‑credit with startup speed.
+# Peer_Lend Project
 
-## Decisioning Feature Program
-Architects, Engineers, and Stakeholders collaborate to plan, design, develop, and test the decisioning capabilities that strengthen P2P lending outcomes.
+## Current Repository Layout
 
-Current feature tracks:
-- Borrower Risk Scoring
-- Collateralization Framework
-- Payback Stimulation Engine
+The runnable app currently lives under `github/PeerLending`.
+
+## Local MySQL Setup (Fintech schema)
+
+1. Copy `.env.example` to `.env` at repository root.
+2. Update the MySQL values in `.env`.
+3. Apply schema and table scripts:
+
+```powershell
+python scripts/apply_fintech_schema.py
+```
+
+4. Verify tables in Workbench under schema `fintech`.
+
+## Verify Local and GitHub Sync
+
+Use these commands from repo root:
+
+```powershell
+git status --short --branch
+git add -A
+git commit -m "Sync local changes"
+git push origin main
+```
+
+If GitHub Desktop fails to commit, use the terminal commands above to surface the exact error.
