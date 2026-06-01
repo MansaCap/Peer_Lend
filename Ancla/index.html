@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accesso Ancla | Peer_Lend</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f4f7fb;
+            --ink: #10233f;
+            --muted: #5c6b82;
+            --card: #ffffff;
+            --accent: #1d7cf2;
+            --accent-2: #134a8e;
+            --line: #d8e2ef;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top left, rgba(29, 124, 242, 0.18), transparent 28%),
+                radial-gradient(circle at bottom right, rgba(19, 74, 142, 0.14), transparent 22%),
+                var(--bg);
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 3rem 1.5rem 2rem;
+            text-align: center;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.72);
+            color: var(--accent-2);
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: clamp(2.25rem, 5vw, 4rem);
+            line-height: 1.05;
+            margin-bottom: 0.75rem;
+        }
+
+        .subtitle {
+            max-width: 720px;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            align-items: stretch;
+            margin-top: 2rem;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(216, 226, 239, 0.9);
+            border-radius: 24px;
+            padding: 1.5rem;
+            box-shadow: 0 18px 40px rgba(16, 35, 63, 0.08);
+            backdrop-filter: blur(10px);
+        }
+
+        .panel h2 {
+            font-size: 1.15rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .panel p,
+        .panel li {
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .metric {
+            padding: 1rem;
+            border-radius: 18px;
+            background: linear-gradient(180deg, rgba(29, 124, 242, 0.08), rgba(29, 124, 242, 0.03));
+            border: 1px solid rgba(29, 124, 242, 0.12);
+        }
+
+        .metric strong {
+            display: block;
+            font-size: 1.6rem;
+            color: var(--accent-2);
+            margin-bottom: 0.25rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 1.25rem;
+        }
+
+        .card h3 {
+            margin-bottom: 0.6rem;
+            font-size: 1.05rem;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem 1rem 2.5rem;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="eyebrow">Peer_Lend · Accesso Ancla</div>
+        <h1>Community finance with a clear local entry point</h1>
+        <p class="subtitle">This branch now exposes a real landing page for GitHub Pages and for local hosting, so the Ancla view no longer depends on a missing file path.</p>
+    </header>
+
+    <main>
+        <section class="hero">
+            <article class="panel">
+                <h2>What this branch serves</h2>
+                <p>The root page redirects to <a href="Ancla/index.html">Ancla/index.html</a>, and the Ancla folder contains the publishable landing page for the Accesso Ancla experience.</p>
+                <div class="metrics">
+                    <div class="metric">
+                        <strong>1</strong>
+                        <span>branch entry point</span>
+                    </div>
+                    <div class="metric">
+                        <strong>2</strong>
+                        <span>servable paths</span>
+                    </div>
+                    <div class="metric">
+                        <strong>0</strong>
+                        <span>missing page files</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="panel">
+                <h2>Peer lending focus</h2>
+                <p>Peer_Lend is positioned as a community-driven micro-credit engine. This landing page keeps the published branch aligned with that message while remaining static and easy to host.</p>
+                <ul style="margin-left: 1.15rem; margin-top: 0.8rem;">
+                    <li>Borrower risk scoring</li>
+                    <li>Collateralization framework</li>
+                    <li>Payback stimulation engine</li>
+                </ul>
+            </article>
+        </section>
+
+        <section class="grid">
+            <article class="card">
+                <h3>Local host</h3>
+                <p>Open the repository root in a static server or Codespace and the browser will resolve the root file first, then land on the Ancla page.</p>
+            </article>
+
+            <article class="card">
+                <h3>GitHub Pages</h3>
+                <p>When the branch is published, GitHub Pages can serve the branch root and still resolve to a concrete entry file instead of a missing folder.</p>
+            </article>
+
+            <article class="card">
+                <h3>Next check</h3>
+                <p>If you want the page name or copy to be different, I can update this landing page content without changing the branch wiring.</p>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <div>Peer_Lend · Accesso Ancla</div>
+        <div>Published entry files: <a href="../index.html">root</a> and <a href="index.html">Ancla/index.html</a></div>
+    </footer>
+</body>
+</html>
