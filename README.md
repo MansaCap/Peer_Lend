@@ -1,4 +1,5 @@
 📂 Peer Lending
+
 Peer Lending is an umbrella project for community‑driven peer‑to‑peer lending applications. It provides a modular foundation for building micro‑credit engines that combine trust, transparency, and startup speed.
 
 Current branch focus:
@@ -9,6 +10,7 @@ Pulse Lending
 Accesso Ancla
 
 🌐 Vision
+
 The Peer Lending initiative aims to deliver accessible micro‑credit through:
 Community signals and social trust
 Machine‑driven risk models
@@ -17,6 +19,7 @@ Transparent borrower/lender dashboards
 Automated notifications (email + Telegram)
 
 🏛️ Brand Segments
+
 🔵 Pulse Lending
 Identity: A community‑driven micro‑credit engine designed for everyday borrowers and lenders.
 Tagline: “Finance with community at its core.”
@@ -24,28 +27,28 @@ Focus: Building trust networks and shared growth through transparent lending.
 Use Case: Empowering individuals to borrow and lend within their social or professional circles.
 
 🟠 Accesso Ancla
+
 Identity: A neighborhood‑focused lending platform emphasizing local solidarity.
 Tagline: “Credit built on community roots.”
 Focus: Strengthening financial inclusion at the grassroots level.
 Use Case: Supporting small businesses, gig workers, and families through localized peer lending.
 
 🛠️ Development Tracks
+
 Both apps currently share the same technical objectives and roadmap:
+
 Borrower Risk Scoring
-
-
-Machine‑driven PD/LTV models
-Community trust signals
-Collateralization Framework
-
+  Machine‑driven PD/LTV models
+  Community trust signals
+  Collateralization Framework
 
 Digital asset escrow contracts
-Payroll deduction modules
+  Payroll deduction modules
+  Payback Simulation Engine
+
 Payback Simulation Engine
-
-
-Flexible repayment schedules
-Revenue‑share integrations
+  Flexible repayment schedules
+  Revenue‑share integrations
 
 📑 Repo Structure
 
