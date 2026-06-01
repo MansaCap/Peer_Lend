@@ -1,6 +1,10 @@
 📂 Peer Lending
 Peer Lending is an umbrella project for community‑driven peer‑to‑peer lending applications. It provides a modular foundation for building micro‑credit engines that combine trust, transparency, and startup speed.
-Currently, two flagship apps are being developed under this repo:
+
+Current branch focus:
+Peer_Lending_Pulse
+
+Current flagship apps under this repo:
 Pulse Lending
 Accesso Ancla
 
@@ -47,13 +51,17 @@ Revenue‑share integrations
 
 peer-lending/
 │
-├── pulse-lending/        # Pulse Lending app
-├── banco-de-barrio/      # Accesso Ancla app
+├── Pulse/                # Pulse Lending app
+├── Ancla/                # Accesso Ancla app
 ├── api/                  # FastAPI routes (identity, collateral, loan)
 ├── db/                   # Database migrations & schema
 ├── docs/                 # Scope of work, compliance notes
 └── roadmap/              # GitHub Project boards (Roadmap + Kanban)
 
+Published page entry points:
+
+- Root: index.html
+- Accesso Ancla: Ancla/index.html
 
 🚀 Roadmap Milestones
 MVP → Account creation, loan request, approval, fund distribution
