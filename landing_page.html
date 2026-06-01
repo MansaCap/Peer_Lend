@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peer Lend - Community Lending Made Simple</title>
     <style>
+        :root {
+            /* Primary Colors */
+            --emerald-green: #00A86B;
+            --deep-navy: #002D62;
+            
+            /* Accent Colors */
+            --sunset-orange: #FF7E29;
+            --gold: #FFC107;
+            
+            /* Neutral Palette */
+            --graphite-gray: #1E1E1E;
+            --mist-gray: #9CA3AF;
+            --snow-white: #F1F5F9;
+            
+            /* Supporting Blues/Teals */
+            --steel-blue: #0369A1;
+            --teal: #0891B2;
+            --green-accent: #16A34A;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,14 +34,14 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--graphite-gray);
         }
 
         /* Navigation Bar */
         nav {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--emerald-green) 100%);
+            padding: 1.2rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -37,9 +57,12 @@
 
         .logo {
             font-size: 1.8rem;
-            font-weight: bold;
-            color: white;
+            font-weight: 700;
+            color: var(--snow-white);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .nav-links {
@@ -49,19 +72,20 @@
         }
 
         .nav-links a {
-            color: white;
+            color: var(--snow-white);
             text-decoration: none;
-            transition: opacity 0.3s;
+            transition: color 0.3s;
+            font-weight: 500;
         }
 
         .nav-links a:hover {
-            opacity: 0.8;
+            color: var(--sunset-orange);
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--emerald-green) 100%);
+            color: var(--snow-white);
             padding: 100px 2rem;
             text-align: center;
             min-height: 80vh;
@@ -69,35 +93,58 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 126, 41, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
         }
 
         .hero-content {
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
 
         .hero-logo {
             font-size: 4rem;
             margin-bottom: 1rem;
-            animation: float 3s ease-in-out infinite;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         .hero h1 {
             font-size: 3.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             font-weight: 700;
+            color: var(--snow-white);
         }
 
         .tagline {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 2rem;
             opacity: 0.95;
             font-weight: 300;
+            color: var(--gold);
         }
 
         /* CTA Buttons */
@@ -122,25 +169,28 @@
         }
 
         .btn-primary {
-            background: white;
-            color: #667eea;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background: var(--gold);
+            color: var(--deep-navy);
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
         }
 
         .btn-primary:hover {
+            background: var(--sunset-orange);
+            color: var(--snow-white);
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 20px rgba(255, 126, 41, 0.4);
         }
 
         .btn-secondary {
             background: transparent;
-            color: white;
-            border: 2px solid white;
+            color: var(--snow-white);
+            border: 2px solid var(--emerald-green);
         }
 
         .btn-secondary:hover {
-            background: white;
-            color: #667eea;
+            background: var(--emerald-green);
+            border-color: var(--emerald-green);
+            transform: translateY(-3px);
         }
 
         /* Container */
@@ -153,14 +203,15 @@
         /* Features Section */
         .features {
             padding: 80px 2rem;
-            background: #f8f9fa;
+            background: var(--snow-white);
         }
 
         .features-title {
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 3rem;
-            color: #333;
+            color: var(--deep-navy);
+            font-weight: 700;
         }
 
         .features-grid {
@@ -173,50 +224,153 @@
         .feature-card {
             background: white;
             padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             text-align: center;
             transition: all 0.3s ease;
-            border-top: 4px solid transparent;
+            border-left: 5px solid transparent;
         }
 
         .feature-card:nth-child(1) {
-            border-top-color: #667eea;
+            border-left-color: var(--emerald-green);
         }
 
         .feature-card:nth-child(2) {
-            border-top-color: #764ba2;
+            border-left-color: var(--sunset-orange);
         }
 
         .feature-card:nth-child(3) {
-            border-top-color: #f093fb;
+            border-left-color: var(--gold);
         }
 
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
         }
 
         .feature-icon {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
+            display: inline-block;
+            width: 70px;
+            height: 70px;
+            background: var(--snow-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-card:nth-child(1) .feature-icon {
+            background: rgba(0, 168, 107, 0.1);
+            border: 2px solid var(--emerald-green);
+        }
+
+        .feature-card:nth-child(2) .feature-icon {
+            background: rgba(255, 126, 41, 0.1);
+            border: 2px solid var(--sunset-orange);
+        }
+
+        .feature-card:nth-child(3) .feature-icon {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid var(--gold);
         }
 
         .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #333;
+            color: var(--deep-navy);
+            font-weight: 600;
         }
 
         .feature-card p {
-            color: #666;
+            color: var(--mist-gray);
             line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 80px 2rem;
+            background: white;
+        }
+
+        .how-it-works-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--deep-navy);
+            font-weight: 700;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            position: relative;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--emerald-green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 15px rgba(0, 168, 107, 0.3);
+        }
+
+        .step h4 {
+            color: var(--deep-navy);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .step p {
+            color: var(--mist-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 60px 2rem;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--emerald-green) 100%);
+            color: var(--snow-white);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .stat-item p {
+            font-size: 1rem;
+            opacity: 0.9;
         }
 
         /* Footer */
         footer {
-            background: #2c3e50;
-            color: white;
+            background: var(--graphite-gray);
+            color: var(--snow-white);
             padding: 3rem 2rem;
         }
 
@@ -229,7 +383,8 @@
 
         .footer-section h4 {
             margin-bottom: 1rem;
-            color: #667eea;
+            color: var(--gold);
+            font-weight: 600;
         }
 
         .footer-section ul {
@@ -241,29 +396,32 @@
         }
 
         .footer-section a {
-            color: #bdc3c7;
+            color: var(--mist-gray);
             text-decoration: none;
             transition: color 0.3s;
         }
 
         .footer-section a:hover {
-            color: #667eea;
+            color: var(--emerald-green);
         }
 
         .contact-info {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .footer-divider {
-            border-top: 1px solid #34495e;
+            border-top: 1px solid rgba(255, 193, 7, 0.2);
             margin: 2rem 0;
         }
 
         .footer-bottom {
             text-align: center;
             padding-top: 1rem;
-            border-top: 1px solid #34495e;
-            color: #95a5a6;
+            border-top: 1px solid rgba(255, 193, 7, 0.2);
+            color: var(--mist-gray);
             font-size: 0.9rem;
         }
 
@@ -279,15 +437,16 @@
             height: 40px;
             align-items: center;
             justify-content: center;
-            background: #667eea;
+            background: var(--emerald-green);
             border-radius: 50%;
             color: white;
             text-decoration: none;
             transition: all 0.3s;
+            font-weight: 600;
         }
 
         .social-links a:hover {
-            background: #764ba2;
+            background: var(--sunset-orange);
             transform: translateY(-3px);
         }
 
@@ -315,6 +474,18 @@
                 gap: 1rem;
                 font-size: 0.9rem;
             }
+
+            .hero::before {
+                width: 300px;
+                height: 300px;
+                top: -30%;
+                right: -20%;
+            }
+
+            .features-title,
+            .how-it-works-title {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -325,6 +496,7 @@
             <a href="#" class="logo">💳 Peer Lend</a>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="https://github.com/MansaCap/Peer_Lend" target="_blank">GitHub</a></li>
             </ul>
@@ -374,6 +546,59 @@
         </div>
     </section>
 
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="how-it-works-title">How It Works</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Sign Up</h4>
+                    <p>Create your account and complete simple verification</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>Apply or Invest</h4>
+                    <p>Choose to apply for a loan or invest in borrowers</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Connect</h4>
+                    <p>Match with community members and build relationships</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h4>Grow Together</h4>
+                    <p>Manage loans, track returns, and support your community</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>500+</h3>
+                    <p>Active Members</p>
+                </div>
+                <div class="stat-item">
+                    <h3>$2.5M+</h3>
+                    <p>Loans Funded</p>
+                </div>
+                <div class="stat-item">
+                    <h3>98%</h3>
+                    <p>Repayment Rate</p>
+                </div>
+                <div class="stat-item">
+                    <h3>15+</h3>
+                    <p>Countries Served</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer id="contact">
         <div class="container">
@@ -381,7 +606,7 @@
                 <!-- About Section -->
                 <div class="footer-section">
                     <h4>About Peer Lend</h4>
-                    <p>We're building a community-driven micro-credit engine that empowers borrowers and investors to grow together.</p>
+                    <p>We're building a community-driven micro-credit engine that empowers borrowers and investors to grow together. Our mission is to democratize access to credit and investment opportunities.</p>
                 </div>
 
                 <!-- Quick Links -->
@@ -391,6 +616,7 @@
                         <li><a href="#apply">Apply Now</a></li>
                         <li><a href="#investor">Investor Dashboard</a></li>
                         <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
                         <li><a href="https://github.com/MansaCap/Peer_Lend" target="_blank">GitHub Repository</a></li>
                     </ul>
                 </div>
@@ -398,12 +624,21 @@
                 <!-- Contact -->
                 <div class="footer-section">
                     <h4>Get in Touch</h4>
-                    <div class="contact-info">📧 Email: <a href="mailto:info@peerlend.com">info@peerlend.com</a></div>
-                    <div class="contact-info">📱 Phone: Coming Soon</div>
-                    <div class="contact-info">🌐 Website: <a href="https://mansacap.github.io/Peer_Lend/" target="_blank">Visit Us</a></div>
+                    <div class="contact-info">
+                        <span>📧</span>
+                        <a href="mailto:info@peerlend.com">info@peerlend.com</a>
+                    </div>
+                    <div class="contact-info">
+                        <span>🌐</span>
+                        <a href="https://mansacap.github.io/Peer_Lend/" target="_blank">Visit Website</a>
+                    </div>
+                    <div class="contact-info">
+                        <span>🐙</span>
+                        <a href="https://github.com/MansaCap" target="_blank">GitHub</a>
+                    </div>
                     <div class="social-links">
-                        <a href="https://github.com/MansaCap" title="GitHub" target="_blank">🐙</a>
-                        <a href="#" title="Twitter" target="_blank">𝕏</a>
+                        <a href="https://github.com/MansaCap" title="GitHub" target="_blank">G</a>
+                        <a href="#" title="Twitter" target="_blank">X</a>
                         <a href="#" title="LinkedIn" target="_blank">in</a>
                     </div>
                 </div>
@@ -412,7 +647,7 @@
             <div class="footer-divider"></div>
 
             <div class="footer-bottom">
-                <p>&copy; 2026 Peer Lend by MansaCap. All rights reserved. | <a href="https://github.com/MansaCap/Peer_Lend" target="_blank" style="color: #667eea;">View on GitHub</a></p>
+                <p>&copy; 2026 Peer Lend by MansaCap. All rights reserved. | <a href="https://github.com/MansaCap/Peer_Lend" target="_blank" style="color: var(--emerald-green);">View on GitHub</a></p>
             </div>
         </div>
     </footer>
