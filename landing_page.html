@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peer Lend - Community Lending Made Simple</title>
+    <style>
+        :root {
+            /* Primary Colors */
+            --emerald-green: #00A86B;
+            --deep-navy: #002D62;
+            
+            /* Accent Colors */
+            --sunset-orange: #FF7E29;
+            --gold: #FFC107;
+            
+            /* Neutral Palette */
+            --graphite-gray: #1E1E1E;
+            --mist-gray: #9CA3AF;
+            --snow-white: #F1F5F9;
+            
+            /* Supporting Blues/Teals */
+            --steel-blue: #0369A1;
+            --teal: #0891B2;
+            --green-accent: #16A34A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--graphite-gray);
+        }
+
+        /* Navigation Bar */
+        nav {
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--emerald-green) 100%);
+            padding: 1.2rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--snow-white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--snow-white);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--sunset-orange);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--emerald-green) 100%);
+            color: var(--snow-white);
+            padding: 100px 2rem;
+            text-align: center;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 126, 41, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: var(--snow-white);
+        }
+
+        .tagline {
+            font-size: 1.6rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            font-weight: 300;
+            color: var(--gold);
+        }
+
+        /* CTA Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--deep-navy);
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--sunset-orange);
+            color: var(--snow-white);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 126, 41, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--snow-white);
+            border: 2px solid var(--emerald-green);
+        }
+
+        .btn-secondary:hover {
+            background: var(--emerald-green);
+            border-color: var(--emerald-green);
+            transform: translateY(-3px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 2rem;
+            background: var(--snow-white);
+        }
+
+        .features-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--deep-navy);
+            font-weight: 700;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+            border-left: 5px solid transparent;
+        }
+
+        .feature-card:nth-child(1) {
+            border-left-color: var(--emerald-green);
+        }
+
+        .feature-card:nth-child(2) {
+            border-left-color: var(--sunset-orange);
+        }
+
+        .feature-card:nth-child(3) {
+            border-left-color: var(--gold);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            width: 70px;
+            height: 70px;
+            background: var(--snow-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-card:nth-child(1) .feature-icon {
+            background: rgba(0, 168, 107, 0.1);
+            border: 2px solid var(--emerald-green);
+        }
+
+        .feature-card:nth-child(2) .feature-icon {
+            background: rgba(255, 126, 41, 0.1);
+            border: 2px solid var(--sunset-orange);
+        }
+
+        .feature-card:nth-child(3) .feature-icon {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid var(--gold);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--deep-navy);
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: var(--mist-gray);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 80px 2rem;
+            background: white;
+        }
+
+        .how-it-works-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--deep-navy);
+            font-weight: 700;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            position: relative;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--emerald-green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 15px rgba(0, 168, 107, 0.3);
+        }
+
+        .step h4 {
+            color: var(--deep-navy);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .step p {
+            color: var(--mist-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 60px 2rem;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--emerald-green) 100%);
+            color: var(--snow-white);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .stat-item p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--graphite-gray);
+            color: var(--snow-white);
+            padding: 3rem 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--mist-gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--emerald-green);
+        }
+
+        .contact-info {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-divider {
+            border-top: 1px solid rgba(255, 193, 7, 0.2);
+            margin: 2rem 0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 193, 7, 0.2);
+            color: var(--mist-gray);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            background: var(--emerald-green);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .social-links a:hover {
+            background: var(--sunset-orange);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero::before {
+                width: 300px;
+                height: 300px;
+                top: -30%;
+                right: -20%;
+            }
+
+            .features-title,
+            .how-it-works-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">💳 Peer Lend</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="https://github.com/MansaCap/Peer_Lend" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-logo">💰</div>
+            <h1>Peer Lend</h1>
+            <p class="tagline">Community Lending Made Simple</p>
+            <div class="cta-buttons">
+                <a href="#apply" class="btn btn-primary">Apply Now</a>
+                <a href="#investor" class="btn btn-secondary">Investor Login</a>
+            </div>
+            <p style="font-size: 0.95rem; opacity: 0.9;">Empowering communities through peer-to-peer lending</p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="features-title">Why Choose Peer Lend?</h2>
+            <div class="features-grid">
+                <!-- Trust Card -->
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Trust</h3>
+                    <p>Transparent lending process with verified borrowers and investors. Build communities based on trust and accountability with our secure platform.</p>
+                </div>
+
+                <!-- Growth Card -->
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Growth</h3>
+                    <p>Grow your wealth through sustainable micro-credit investments. Access competitive returns while supporting community development and financial inclusion.</p>
+                </div>
+
+                <!-- Accessibility Card -->
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Accessibility</h3>
+                    <p>Low barriers to entry for both borrowers and investors. Simple processes and inclusive design make community lending available to everyone.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="how-it-works-title">How It Works</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Sign Up</h4>
+                    <p>Create your account and complete simple verification</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>Apply or Invest</h4>
+                    <p>Choose to apply for a loan or invest in borrowers</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Connect</h4>
+                    <p>Match with community members and build relationships</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h4>Grow Together</h4>
+                    <p>Manage loans, track returns, and support your community</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>500+</h3>
+                    <p>Active Members</p>
+                </div>
+                <div class="stat-item">
+                    <h3>$2.5M+</h3>
+                    <p>Loans Funded</p>
+                </div>
+                <div class="stat-item">
+                    <h3>98%</h3>
+                    <p>Repayment Rate</p>
+                </div>
+                <div class="stat-item">
+                    <h3>15+</h3>
+                    <p>Countries Served</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <!-- About Section -->
+                <div class="footer-section">
+                    <h4>About Peer Lend</h4>
+                    <p>We're building a community-driven micro-credit engine that empowers borrowers and investors to grow together. Our mission is to democratize access to credit and investment opportunities.</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#apply">Apply Now</a></li>
+                        <li><a href="#investor">Investor Dashboard</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="https://github.com/MansaCap/Peer_Lend" target="_blank">GitHub Repository</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="footer-section">
+                    <h4>Get in Touch</h4>
+                    <div class="contact-info">
+                        <span>📧</span>
+                        <a href="mailto:info@peerlend.com">info@peerlend.com</a>
+                    </div>
+                    <div class="contact-info">
+                        <span>🌐</span>
+                        <a href="https://mansacap.github.io/Peer_Lend/" target="_blank">Visit Website</a>
+                    </div>
+                    <div class="contact-info">
+                        <span>🐙</span>
+                        <a href="https://github.com/MansaCap" target="_blank">GitHub</a>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://github.com/MansaCap" title="GitHub" target="_blank">G</a>
+                        <a href="#" title="Twitter" target="_blank">X</a>
+                        <a href="#" title="LinkedIn" target="_blank">in</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Peer Lend by MansaCap. All rights reserved. | <a href="https://github.com/MansaCap/Peer_Lend" target="_blank" style="color: var(--emerald-green);">View on GitHub</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

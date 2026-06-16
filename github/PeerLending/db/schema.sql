@@ -1,1 +1,0 @@
--- SQL scaffold for schema.sql
