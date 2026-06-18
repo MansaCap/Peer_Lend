@@ -66,6 +66,41 @@ Published page entry points:
 - Root: index.html
 - Accesso Ancla: Ancla/index.html
 
+⚙️ Developer Setup
+
+**Branch:** `Peer_Lending_Pulse`
+
+```bash
+git checkout Peer_Lending_Pulse
+```
+
+**Install dependencies**
+
+Requires [Poetry](https://python-poetry.org/docs/#installation) and Python 3.11.
+
+```bash
+poetry install
+```
+
+**Run the API server**
+
+```bash
+# Shorthand script (hot-reload, port 8001)
+poetry run start
+
+# Or explicitly with uvicorn
+poetry run uvicorn src.api:app --reload --host 127.0.0.1 --port 8001
+```
+
+API will be available at `http://127.0.0.1:8001`.
+Interactive docs: `http://127.0.0.1:8001/docs`
+
+**Run tests**
+
+```bash
+poetry run pytest
+```
+
 🚀 Roadmap Milestones
 MVP → Account creation, loan request, approval, fund distribution
 Pilot → Risk scoring + collateral modules live

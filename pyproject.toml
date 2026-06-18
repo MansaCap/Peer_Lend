@@ -6,6 +6,9 @@ version = "0.1.0"
 description = "Pulse Lending demo app with Streamlit borrower scoring"
 authors = ["BentleyBot <winstonwilliamsiii@gmail.com>"]
 license = "MIT"
+packages = [
+  { include = "src" }
+]
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.12"
@@ -14,11 +17,14 @@ pandas = "^2.2.2"
 numpy = "^1.26.4"
 fastapi = "^0.111.0"
 pydantic = "^2.7.1"
+uvicorn = { extras = ["standard"], version = "^0.30.0" }
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"
+
+[tool.poetry.scripts]
+start = "src.api.scripts:start"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-
