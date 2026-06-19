@@ -2,6 +2,10 @@ from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel, EmailStr
 from typing import Optional
 
+from src.api.loans import router as loans_router
+from src.api.notifications import router as notifications_router
+from src.api.payback import router as payback_router
+
 app = FastAPI(title="Peer Lending API", version="1.0.0")
 
 # -------------------------------
@@ -86,3 +90,8 @@ def integration_hooks(request: IntegrationHookRequest):
         raise HTTPException(status_code=400, detail="Unsupported provider")
     # TODO: process webhook payload
     return IntegrationHookResponse(success=True, message=f"Processed {request.provider} payload")
+
+
+app.include_router(payback_router)
+app.include_router(loans_router)
+app.include_router(notifications_router)
