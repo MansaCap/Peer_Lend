@@ -1,22 +1,20 @@
 import { useState } from "react";
 
+const API_BASE_URL = "http://127.0.0.1:8001/api/v1";
+
 export default function StatusPage() {
   const [loanId, setLoanId] = useState("");
   const [status, setStatus] = useState<any>(null);
 
   async function fetchStatus() {
-    const response = await fetch("http://127.0.0.1:8000/api/v1/payback/schedule", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        loan_id: Number(loanId),
-        principal: 5000,
-        term: 12,
-        interest_rate: 5.0
-      }),
-    });
+    const query = loanId ? `?loan_id=${encodeURIComponent(loanId)}` : "";
+    const response = await fetch(`${API_BASE_URL}/repayments${query}`);
     const data = await response.json();
-    setStatus(data);
+    setStatus({
+      loan_id: Number(loanId),
+      schedule: data || [],
+      next_payment: data?.[0] || null,
+    });
   }
 
   return (

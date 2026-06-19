@@ -1,22 +1,16 @@
 import { useEffect, useState } from "react";
 
+const API_BASE_URL = "http://127.0.0.1:8001/api/v1";
+
 export default function RepaymentsPage() {
   const [loanId, setLoanId] = useState("");
   const [repayments, setRepayments] = useState<any[]>([]);
 
   async function fetchRepayments() {
-    const response = await fetch("http://127.0.0.1:8000/api/v1/payback/schedule", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        loan_id: Number(loanId),
-        principal: 5000,
-        term: 12,
-        interest_rate: 5.0,
-      }),
-    });
+    const query = loanId ? `?loan_id=${encodeURIComponent(loanId)}` : "";
+    const response = await fetch(`${API_BASE_URL}/repayments${query}`);
     const data = await response.json();
-    setRepayments(data.schedule || []);
+    setRepayments(data || []);
   }
 
   return (
