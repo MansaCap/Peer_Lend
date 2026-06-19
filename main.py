@@ -1,8 +1,6 @@
 from src.api import app
-__all__ = ["app"]
-from src.api import app
-__all__ = ["app"]
-from api import notifications, payback
+from src.api.payback import router as payback_router
 
-app.include_router(notifications.router)
-app.include_router(payback.router)
+app.include_router(payback_router)
+
+__all__ = ["app"]
