@@ -17,6 +17,8 @@ pandas = "^2.2.2"
 numpy = "^1.26.4"
 fastapi = "^0.111.0"
 pydantic = "^2.7.1"
+python-dotenv = "^1.0.1"
+supabase = "^2.15.3"
 uvicorn = { extras = ["standard"], version = "^0.30.0" }
 
 [tool.poetry.group.dev.dependencies]
