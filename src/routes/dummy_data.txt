@@ -1,0 +1,31 @@
+-- 1) borrower profile
+with p as (
+  insert into profiles (id, kyc_status, bank_linked, wallet_address)
+  values (gen_random_uuid(), 'Approved', true, '0xABC123')
+  returning id
+),
+
+-- 2) loans (lowercase statuses to match API filter)
+l1 as (
+  insert into loans (borrower_id, principal, term, interest_rate, status)
+  select id, 5000, 12, 5.0, 'pending' from p
+  returning id, borrower_id
+),
+l2 as (
+  insert into loans (borrower_id, principal, term, interest_rate, status)
+  select id, 10000, 24, 6.5, 'approved' from p
+  returning id, borrower_id
+)
+
+-- 3) repayments tied to actual inserted loan
+insert into repayments (loan_id, due_date, amount_due, status)
+select l1.id, d::date, 420, 'Pending'
+from l1
+cross join (values ('2026-07-01'), ('2026-08-01'), ('2026-09-01')) as v(d);
+
+-- 4) notifications tied to the borrower
+insert into notifications (profile_id, type, message)
+select borrower_id, 'Loan Update', 'Your loan has been approved.' from l2;
+
+insert into notifications (profile_id, type, message)
+select borrower_id, 'Repayment Reminder', 'Payment of $420 is due on 2026-07-01.' from l1;
