@@ -1,12 +1,14 @@
 import { Bar, BarChart, CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 import { useEffect, useState } from "react";
 
+const API_BASE_URL = "http://127.0.0.1:8001/api/v1";
+
 export default function AnalyticsPage() {
   const [analytics, setAnalytics] = useState<any>(null);
 
   useEffect(() => {
     async function fetchAnalytics() {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/analytics");
+      const response = await fetch(`${API_BASE_URL}/analytics`);
       const data = await response.json();
       setAnalytics(data);
     }
