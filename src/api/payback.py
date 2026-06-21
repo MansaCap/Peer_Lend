@@ -67,6 +67,11 @@ def get_repayments(loan_id: int | None = Query(default=None)):
     return response.data or []
 
 
+@router.get("/repayments/{loan_id}")
+def get_repayments_alias(loan_id: int):
+    return get_repayments(loan_id=loan_id)
+
+
 @router.post("/payback/schedule", response_model=PaybackResponse)
 def legacy_generate_schedule(request: PaybackRequest):
     return generate_schedule(request)
