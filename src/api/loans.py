@@ -15,6 +15,11 @@ def get_loans(status: str | None = Query(default="pending")):
     return response.data or []
 
 
+@router.get("/loans/pending")
+def get_pending_loans_alias():
+    return get_loans(status="pending")
+
+
 def _update_loan_status(loan_id: int, status: str):
     response = (
         supabase.table("loans")
