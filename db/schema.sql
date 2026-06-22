@@ -8,7 +8,7 @@ create table if not exists public.borrowers (
 create table if not exists public.loans (
 	id bigint primary key,
 	borrower_id bigint references public.borrowers(id),
-	amount numeric(12, 2) not null,
+	principal numeric(12, 2) not null,
 	status text not null,
 	created_at timestamptz not null default now()
 );
