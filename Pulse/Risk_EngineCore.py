@@ -83,3 +83,15 @@ def score_borrower(x_row: pd.DataFrame, alpha=0.5) -> float:
     lgb_p = lgb_model.predict(x_row, num_iteration=lgb_model.best_iteration)[0]
     xgb_p = xgb_model.predict(xgb.DMatrix(x_row), ntree_limit=xgb_model.best_ntree_limit)[0]
     return float(alpha * lgb_p + (1 - alpha) * xgb_p)
+
+# -----------------------------
+    # 3. Register blended model
+    # -----------------------------
+    mlflow.register_model(
+        model_uri=f"runs:/{mlflow.active_run().info.run_id}/LightGBM_Model",
+        name="Pulse_Lending_LightGBM"
+    )
+    mlflow.register_model(
+        model_uri=f"runs:/{mlflow.active_run().info.run_id}/XGBoost_Model",
+        name="Pulse_Lending_XGBoost"
+    )
