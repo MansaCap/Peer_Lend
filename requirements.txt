@@ -1,5 +1,8 @@
 fastapi
-python-dotenv
-supabase
 uvicorn
-
+pandas
+numpy
+scikit-learn
+lightgbm
+xgboost
+mlflow
