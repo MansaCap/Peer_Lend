@@ -1,3 +1,5 @@
+USE fintech
+
 -- Loans table
 CREATE TABLE IF NOT EXISTS loans (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
