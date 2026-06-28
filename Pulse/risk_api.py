@@ -1,5 +1,7 @@
 from fastapi import FastAPI
-import pandas as pd
+import pandas as pd 
+import lightgbm as lgb
+import xgboost as xgb
 from Risk_EngineCore import score_borrower  # import your scoring function
 
 app = FastAPI(title="Pulse Lending Risk Engine API")
