@@ -9,7 +9,7 @@ create table if not exists public.borrowers (
 create table if not exists public.loans (
 	id bigint primary key,
 	borrower_id bigint references public.borrowers(id),
-	amount numeric(12, 2) not null,
+	principal numeric(12, 2) not null,
 	status text not null,
 	created_at timestamptz not null default now()
 );
@@ -44,7 +44,7 @@ set
 	email = excluded.email;
 
 -- Loan seed data (includes loan_id=1 for /repayments?loan_id=1)
-insert into public.loans (id, borrower_id, amount, status)
+insert into public.loans (id, borrower_id, principal, status)
 values
 	(1, 1, 500.00, 'pending'),
 	(2, 2, 1200.00, 'approved'),
@@ -52,7 +52,7 @@ values
 on conflict (id) do update
 set
 	borrower_id = excluded.borrower_id,
-	amount = excluded.amount,
+	principal = excluded.principal,
 	status = excluded.status;
 
 -- Repayment seed data tied to seeded loans
