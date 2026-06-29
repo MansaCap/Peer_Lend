@@ -9,7 +9,7 @@ payload = {
     "status": "open"
 }
 
-response = requests.post(url, json=payload)
+response = requests.post(url, json=payload, timeout=10)
 
 print("Status Code:", response.status_code)
 try:

@@ -100,7 +100,10 @@ def db_health():
             "server_time": str(server_time),
         }
     except mysql.connector.Error as e:
-        raise HTTPException(status_code=503, detail=f"DB health check failed: {e}") from e
+        raise HTTPException(
+            status_code=503,
+            detail=f"DB health check failed: {e}",
+        ) from e
     finally:
         if cursor is not None:
             cursor.close()
