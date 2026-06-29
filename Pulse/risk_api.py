@@ -69,6 +69,7 @@ class Loan(BaseModel):
     borrower_id: int
     principal: float
     status: str
+    collateral_value: float | None = None
 
 
 class Repayment(BaseModel):
@@ -83,11 +84,47 @@ class ComplianceLog(BaseModel):
 
 
 # --- Endpoints ---
+@app.get("/health/db")
+def db_health():
+    conn = None
+    cursor = None
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT DATABASE(), CURRENT_USER(), NOW()")
+        db_name, current_user, server_time = cursor.fetchone()
+        return {
+            "status": "ok",
+            "database": db_name,
+            "current_user": current_user,
+            "server_time": str(server_time),
+        }
+    except mysql.connector.Error as e:
+        raise HTTPException(status_code=503, detail=f"DB health check failed: {e}") from e
+    finally:
+        if cursor is not None:
+            cursor.close()
+        if conn is not None:
+            conn.close()
+
+
 @app.post("/loans/create")
 def create_loan(loan: Loan):
-    conn = get_db_connection()
-    cursor = conn.cursor()
+    valid_statuses = {"open", "closed", "defaulted"}
+    if loan.status not in valid_statuses:
+        raise HTTPException(
+            status_code=422,
+            detail=(
+                "Invalid status. Use one of: open, closed, defaulted. "
+                f"Received: {loan.status}"
+            ),
+        )
+
+    conn = None
+    cursor = None
     try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
         cursor.execute(
             (
                 "INSERT INTO loans (borrower_id, principal_amount, status) "
@@ -96,13 +133,19 @@ def create_loan(loan: Loan):
             (loan.borrower_id, loan.principal, loan.status),
         )
         conn.commit()
-        return {"message": "Loan created successfully"}
-    except Exception as e:
-        conn.rollback()
+        return {
+            "message": "Loan created successfully",
+            "loan_id": cursor.lastrowid,
+        }
+    except mysql.connector.Error as e:
+        if conn is not None:
+            conn.rollback()
         raise HTTPException(status_code=400, detail=str(e)) from e
     finally:
-        cursor.close()
-        conn.close()
+        if cursor is not None:
+            cursor.close()
+        if conn is not None:
+            conn.close()
 
 
 @app.post("/repayments/add")
