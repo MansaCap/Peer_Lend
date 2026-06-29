@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Query
+from ..endpoints import loan_endpoints
 
 app = FastAPI()
+app.include_router(loan_endpoints.router)
 
 # Existing implementation (query param style)
 @app.get("/api/v1/repayments")
