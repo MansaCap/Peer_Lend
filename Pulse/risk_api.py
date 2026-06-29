@@ -1,23 +1,66 @@
-from fastapi import FastAPI, HTTPException
+import os
+from collections import defaultdict, deque
+from threading import Lock
+from time import time
+from typing import Optional
+
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse
 import pandas as pd
 import mlflow
 import mysql.connector
 from pydantic import BaseModel
-from typing import Optional
 
 app = FastAPI(title="Pulse Lending Risk Engine API")
 
 lgb_model: Optional[object] = None
 xgb_model: Optional[object] = None
 
+RATE_LIMIT_REQUESTS = int(os.getenv("RATE_LIMIT_REQUESTS", "60"))
+RATE_LIMIT_WINDOW_SECONDS = int(os.getenv("RATE_LIMIT_WINDOW_SECONDS", "60"))
+_request_buckets: dict[str, deque[float]] = defaultdict(deque)
+_rate_limit_lock = Lock()
+
+
+@app.middleware("http")
+async def rate_limit_middleware(request: Request, call_next):
+    # Keep docs and schema available for tooling and health checks.
+    if request.url.path in {"/docs", "/openapi.json", "/redoc"}:
+        return await call_next(request)
+
+    client_ip = request.client.host if request.client else "unknown"
+    now = time()
+    window_start = now - RATE_LIMIT_WINDOW_SECONDS
+
+    with _rate_limit_lock:
+        bucket = _request_buckets[client_ip]
+        while bucket and bucket[0] < window_start:
+            bucket.popleft()
+
+        if len(bucket) >= RATE_LIMIT_REQUESTS:
+            return JSONResponse(
+                status_code=429,
+                content={
+                    "detail": (
+                        f"Rate limit exceeded: {RATE_LIMIT_REQUESTS} requests "
+                        f"per {RATE_LIMIT_WINDOW_SECONDS} seconds."
+                    )
+                },
+            )
+
+        bucket.append(now)
+
+    return await call_next(request)
+
 
 # Database connection (adjust with your credentials)
 def get_db_connection():
     return mysql.connector.connect(
-         host=os.getenv("DB_HOST", "localhost"),
+        host=os.getenv("DB_HOST", "localhost"),
+        port=int(os.getenv("DB_PORT", "3306")),
         user=os.getenv("DB_USER", "root"),
         password=os.getenv("DB_PASSWORD", ""),
-        database=os.getenv("DB_NAME", "fintech"
+        database=os.getenv("DB_NAME", "fintech"),
     )
 
 
@@ -31,6 +74,7 @@ class Loan(BaseModel):
 class Repayment(BaseModel):
     loan_id: int
     amount: float
+    source: str = "bank_transfer"
 
 
 class ComplianceLog(BaseModel):
@@ -46,7 +90,7 @@ def create_loan(loan: Loan):
     try:
         cursor.execute(
             (
-                "INSERT INTO loans (borrower_id, principal, status) "
+                "INSERT INTO loans (borrower_id, principal_amount, status) "
                 "VALUES (%s, %s, %s)"
             ),
             (loan.borrower_id, loan.principal, loan.status),
@@ -67,8 +111,26 @@ def add_repayment(repayment: Repayment):
     cursor = conn.cursor()
     try:
         cursor.execute(
-            "INSERT INTO repayments (loan_id, amount) VALUES (%s, %s)",
-            (repayment.loan_id, repayment.amount)
+            "SELECT borrower_id FROM loans WHERE loan_id = %s",
+            (repayment.loan_id,),
+        )
+        loan_row = cursor.fetchone()
+        if loan_row is None:
+            raise HTTPException(status_code=404, detail="Loan not found")
+        borrower_id = int(loan_row[0])
+
+        cursor.execute(
+            (
+                "INSERT INTO repayments "
+                "(loan_id, borrower_id, amount, source, payment_date) "
+                "VALUES (%s, %s, %s, %s, NOW())"
+            ),
+            (
+                repayment.loan_id,
+                borrower_id,
+                repayment.amount,
+                repayment.source,
+            ),
         )
         conn.commit()
         return {"message": "Repayment added successfully"}
