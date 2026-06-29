@@ -1,0 +1,5 @@
+Field,Type,Null,Key,Default,Extra
+id,bigint,NO,PRI,NULL,auto_increment
+user_id,bigint,NO,,NULL,
+action,varchar(255),NO,,NULL,
+timestamp,timestamp,YES,,CURRENT_TIMESTAMP,DEFAULT_GENERATED

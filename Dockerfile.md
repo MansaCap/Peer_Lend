@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8001
 
 # Run FastAPI with uvicorn
-CMD ["uvicorn", "risk_api:app", "--host", "0.0.0.0", "--port", "8001"]
+CMD ["uvicorn", "Pulse.risk_api:app", "--host", "0.0.0.0", "--port", "8001"]
