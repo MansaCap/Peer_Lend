@@ -1,0 +1,9 @@
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+$env:Path += ";C:\MansaCap\peer_lending-main\Peer_Lend\.venv\Scripts"
+
+$env:Path += ";C:\MansaCap\peer_lending-main\Peer_Lend\.venv\Scripts"
+
+(.venv)
+
+python --version
