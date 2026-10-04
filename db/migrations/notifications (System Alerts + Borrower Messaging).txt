@@ -1,0 +1,34 @@
+CREATE TABLE notifications (
+    notification_id     BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id             BIGINT NOT NULL,
+
+    channel             ENUM('EMAIL','SMS','IN_APP') NOT NULL,
+    title               VARCHAR(255) NOT NULL,
+    message             TEXT NOT NULL,
+
+    is_read             BOOLEAN DEFAULT FALSE,
+    priority            ENUM('LOW','MEDIUM','HIGH','CRITICAL') DEFAULT 'LOW',
+
+    related_loan_id     BIGINT,
+    related_txn_id      BIGINT,
+
+    created_at          TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    read_at             TIMESTAMP NULL,
+
+    CONSTRAINT fk_notif_user FOREIGN KEY (user_id)
+        REFERENCES users(user_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_notif_loan FOREIGN KEY (related_loan_id)
+        REFERENCES loans(loan_id)
+        ON DELETE SET NULL,
+
+    CONSTRAINT fk_notif_txn FOREIGN KEY (related_txn_id)
+        REFERENCES transactions(transaction_id)
+        ON DELETE SET NULL,
+
+    INDEX idx_notif_user (user_id),
+    INDEX idx_notif_priority (priority),
+    INDEX idx_notif_read (is_read),
+    INDEX idx_notif_created (created_at)
+);
