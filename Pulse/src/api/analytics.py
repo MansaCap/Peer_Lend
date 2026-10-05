@@ -2,7 +2,7 @@ from collections import Counter
 
 from fastapi import APIRouter
 
-from src.api.supabase import supabase
+from Pulse.src.api.supabase import supabase
 
 router = APIRouter(prefix="/api/v1", tags=["analytics"])
 

@@ -1,3 +1,4 @@
+-- Active: 1737943595894@@127.0.0.1@3306@fintech
 # FastAPI Router for Loan Endpoints
 
 from fastapi import APIRouter, Depends

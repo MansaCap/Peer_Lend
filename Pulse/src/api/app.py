@@ -3,10 +3,10 @@ from typing import Optional
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, EmailStr
 
-from src.api.loans import router as loans_router
-from src.api.notifications import router as notifications_router
-from src.api.payback import router as payback_router
-from src.api.analytics import router as analytics_router
+from Pulse.src.api.loans import router as loans_router
+from Pulse.src.api.notifications import router as notifications_router
+from Pulse.src.api.payback import router as payback_router
+from Pulse.src.api.analytics import router as analytics_router
 
 app = FastAPI(title="Peer Lending API", version="1.0.0")
 

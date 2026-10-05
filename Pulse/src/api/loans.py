@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Query
 
-from src.api.supabase import supabase
+from Pulse.src.api.supabase import supabase
 
 router = APIRouter(prefix="/api/v1", tags=["loans"])
 

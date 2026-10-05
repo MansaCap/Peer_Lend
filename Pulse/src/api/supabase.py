@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-from supabase import create_client
+from Pulse.src.api.supabase import create_client
 
 _ROOT_DIR = Path(__file__).resolve().parents[3]
 _APP_DIR = Path(__file__).resolve().parents[2]
