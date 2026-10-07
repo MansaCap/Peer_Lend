@@ -4,13 +4,13 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-from Pulse.src.api.supabase import create_client
+from supabase import create_client
 
-_ROOT_DIR = Path(__file__).resolve().parents[3]
-_APP_DIR = Path(__file__).resolve().parents[2]
+_REPO_DIR = Path(__file__).resolve().parents[3]
+_PROJECT_DIR = Path(__file__).resolve().parents[2]
 
-load_dotenv(_ROOT_DIR / ".env")
-load_dotenv(_APP_DIR / ".env")
+load_dotenv(_REPO_DIR / ".env")
+load_dotenv(_PROJECT_DIR / ".env")
 
 url = os.getenv("SUPABASE_URL")
 key = os.getenv("SUPABASE_SERVICE_KEY")

@@ -1,14 +1,31 @@
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr
 
-from Pulse.src.api.loans import router as loans_router
-from Pulse.src.api.notifications import router as notifications_router
-from Pulse.src.api.payback import router as payback_router
-from Pulse.src.api.analytics import router as analytics_router
+from peer_lending_backend.src.routers.analytics import router as analytics_router
+from peer_lending_backend.src.routers.collateral import router as collateral_router
+from peer_lending_backend.src.routers.loans import router as loans_router
+from peer_lending_backend.src.routers.notifications import router as notifications_router
+from peer_lending_backend.src.routers.payback import router as payback_router
 
 app = FastAPI(title="Peer Lending API", version="1.0.0")
+
+LOVABLE_ORIGIN = "https://preview--anchor-lend-connect.lovable.app"
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[LOVABLE_ORIGIN],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 # -------------------------------
 # 🔹 Pydantic Schemas
@@ -66,7 +83,7 @@ class IntegrationHookResponse(BaseModel):
 # -------------------------------
 
 @app.post(
-    "/api/v1/auth/login",
+    "/api/auth/login",
     response_model=AuthResponse,
     responses={400: {"model": ErrorResponse}},
 )
@@ -77,7 +94,7 @@ def login(request: AuthRequest):
 
 
 @app.post(
-    "/api/v1/auth/signup",
+    "/api/auth/signup",
     response_model=AuthResponse,
     responses={400: {"model": ErrorResponse}},
 )
@@ -87,7 +104,7 @@ def signup(request: AuthRequest):
 
 
 @app.post(
-    "/api/v1/scoring",
+    "/api/scoring",
     response_model=ScoringResponse,
     responses={400: {"model": ErrorResponse}},
 )
@@ -107,7 +124,7 @@ def scoring(request: ScoringRequest):
 
 
 @app.post(
-    "/api/v1/payback_status",
+    "/api/payback_status",
     response_model=PaybackStatusResponse,
     responses={404: {"model": ErrorResponse}},
 )
@@ -123,7 +140,7 @@ def payback_status(request: PaybackStatusRequest):
 
 
 @app.post(
-    "/api/v1/integration_hooks",
+    "/api/integration_hooks",
     response_model=IntegrationHookResponse,
     responses={400: {"model": ErrorResponse}},
 )
@@ -138,5 +155,6 @@ def integration_hooks(request: IntegrationHookRequest):
 
 app.include_router(payback_router)
 app.include_router(loans_router)
+app.include_router(collateral_router)
 app.include_router(notifications_router)
 app.include_router(analytics_router)

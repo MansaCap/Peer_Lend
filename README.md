@@ -89,7 +89,7 @@ poetry install
 poetry run start
 
 # Or explicitly with uvicorn
-poetry run uvicorn src.api:app --reload --host 127.0.0.1 --port 8001
+poetry run uvicorn peer_lending_backend.main:app --reload --host 127.0.0.1 --port 8001
 ```
 
 API will be available at `http://127.0.0.1:8001`.

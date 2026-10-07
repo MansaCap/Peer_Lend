@@ -7,7 +7,8 @@ description = "Pulse Lending demo app with Streamlit borrower scoring"
 authors = ["BentleyBot <winstonwilliamsiii@gmail.com>"]
 license = "MIT"
 packages = [
-  { include = "src" }
+  { include = "src" },
+  { include = "peer_lending_backend" }
 ]
 
 [tool.poetry.dependencies]
@@ -25,7 +26,7 @@ uvicorn = { extras = ["standard"], version = "^0.30.0" }
 pytest = "^8.2.2"
 
 [tool.poetry.scripts]
-start = "src.api.scripts:start"
+start = "peer_lending_backend.src.scripts:start"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

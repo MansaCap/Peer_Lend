@@ -2,9 +2,9 @@ from collections import Counter
 
 from fastapi import APIRouter
 
-from Pulse.src.api.supabase import supabase
+from peer_lending_backend.src.supabase_client import supabase
 
-router = APIRouter(prefix="/api/v1", tags=["analytics"])
+router = APIRouter(prefix="/api", tags=["analytics"])
 
 
 @router.get("/analytics")
