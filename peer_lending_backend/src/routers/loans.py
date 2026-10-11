@@ -1,44 +1,30 @@
-from fastapi import APIRouter, HTTPException, Query
+#Loan management placeholder.#
+#Matches your loan management table:#
 
-from peer_lending_backend.src.supabase_client import supabase
+from fastapi import APIRouter
 
-router = APIRouter(prefix="/api/loans", tags=["loans"])
+router = APIRouter()
 
+@router.post("/apply")
+def apply(payload: dict):
+    return {"message": "Loan application placeholder", "payload": payload}
 
-@router.get("")
-def get_loans(status: str | None = Query(default="pending")):
-    query = supabase.table("loans").select("*")
-    if status:
-        query = query.eq("status", status)
+@router.post("/approve")
+def approve(payload: dict):
+    return {"message": "Loan approval placeholder", "payload": payload}
 
-    response = query.execute()
-    return response.data or []
+@router.post("/disburse")
+def disburse(payload: dict):
+    return {"message": "Loan disbursement placeholder", "payload": payload}
 
+@router.post("/repay")
+def repay(payload: dict):
+    return {"message": "Loan repayment placeholder", "payload": payload}
 
-@router.get("/pending")
-def get_pending_loans_alias():
-    return get_loans(status="pending")
+@router.post("/default")
+def default(payload: dict):
+    return {"message": "Loan default placeholder", "payload": payload}
 
-
-def _update_loan_status(loan_id: int, status: str):
-    response = (
-        supabase.table("loans")
-        .update({"status": status})
-        .eq("id", loan_id)
-        .execute()
-    )
-
-    if not response.data:
-        raise HTTPException(status_code=404, detail="Loan not found")
-
-    return response.data[0]
-
-
-@router.post("/{loan_id}/approve")
-def approve_loan(loan_id: int):
-    return _update_loan_status(loan_id, "approved")
-
-
-@router.post("/{loan_id}/deny")
-def deny_loan(loan_id: int):
-    return _update_loan_status(loan_id, "denied")
+@router.post("/liquidate")
+def liquidate(payload: dict):
+    return {"message": "Loan liquidation placeholder", "payload": payload}
