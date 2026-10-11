@@ -1,0 +1,100 @@
+#Pulse Lending API Postman Collection JSON#
+
+{
+  "info": {
+    "name": "Peer Lending Auth & Security",
+    "_postman_id": "peer-lending-auth-collection",
+    "description": "Authentication, JWT, OAuth2, RBAC testing for Peer Lending Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"Password123!\",\n  \"role\": \"borrower\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8001/api/auth/register",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8001",
+          "path": ["api", "auth", "register"]
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"Password123!\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8001/api/auth/login",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8001",
+          "path": ["api", "auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "Refresh Token",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8001/api/auth/refresh",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8001",
+          "path": ["api", "auth", "refresh"]
+        }
+      }
+    },
+    {
+      "name": "Get Current User",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8001/api/auth/me",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8001",
+          "path": ["api", "auth", "me"]
+        }
+      }
+    },
+    {
+      "name": "RBAC Protected Route (Admin Only)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8001/api/admin/dashboard",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8001",
+          "path": ["api", "admin", "dashboard"]
+        }
+      }
+    }
+  ]
+}
