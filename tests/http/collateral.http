@@ -1,0 +1,80 @@
+@base_url = http://localhost:8000
+@borrower_id = 1
+@loan_id = 1
+
+### Pledge digital assets as collateral (local)
+POST {{base_url}}/collateral/digital-assets
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}},
+  "borrower_id": {{borrower_id}},
+  "asset_type": "ETH",
+  "amount": 2.5,
+  "wallet_address": "0x0000000000000000000000000000000000000000"
+}
+
+### Register payroll agreement collateral (local)
+POST {{base_url}}/collateral/payroll-agreement
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}},
+  "borrower_id": {{borrower_id}},
+  "employer": "Acme Corp",
+  "monthly_deduction": 150.00,
+  "agreement_url": "https://example.com/docs/payroll.pdf"
+}
+
+### Register gig-share collateral (local)
+POST {{base_url}}/collateral/gig-share
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}},
+  "borrower_id": {{borrower_id}},
+  "platform": "Uber",
+  "share_percentage": 10,
+  "estimated_monthly_income": 800.00
+}
+
+################################################################
+# Production testing
+################################################################
+@prod_url = https://<railway-app>.up.railway.app
+
+### Pledge digital assets (production)
+POST {{prod_url}}/collateral/digital-assets
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}},
+  "borrower_id": {{borrower_id}},
+  "asset_type": "ETH",
+  "amount": 2.5,
+  "wallet_address": "0x0000000000000000000000000000000000000000"
+}
+
+### Payroll agreement (production)
+POST {{prod_url}}/collateral/payroll-agreement
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}},
+  "borrower_id": {{borrower_id}},
+  "employer": "Acme Corp",
+  "monthly_deduction": 150.00,
+  "agreement_url": "https://example.com/docs/payroll.pdf"
+}
+
+### Gig-share (production)
+POST {{prod_url}}/collateral/gig-share
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}},
+  "borrower_id": {{borrower_id}},
+  "platform": "Uber",
+  "share_percentage": 10,
+  "estimated_monthly_income": 800.00
+}

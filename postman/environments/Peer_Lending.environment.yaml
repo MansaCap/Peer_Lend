@@ -1,0 +1,10 @@
+name: Peer_Lending
+values:
+  - key: base_url
+    value: ''
+  - key: borrorer_id
+    value: ''
+  - key: auth_token
+    value: ''
+  - key: railway_url
+    value: ''

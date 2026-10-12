@@ -1,0 +1,10 @@
+#envirnoment varibles
+
+DB_HOST=
+DB_PORT=
+DB_USER=
+DB_PASS=
+DB_NAME=
+
+SECRET_KEY=your-secret-key
+ENV=development

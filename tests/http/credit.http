@@ -1,0 +1,36 @@
+@base_url = http://localhost:8000
+@borrower_id = 1
+@loan_id = 1
+
+### Compute a credit score (local)
+POST {{base_url}}/credit/score
+Content-Type: application/json
+
+{
+  "borrower_id": {{borrower_id}},
+  "income": 4000,
+  "existing_debt": 500,
+  "payment_history_score": 80
+}
+
+### Retrieve a borrower's credit score (local)
+GET {{base_url}}/credit/retrieve/{{borrower_id}}
+
+################################################################
+# Production testing
+################################################################
+@prod_url = https://<railway-app>.up.railway.app
+
+### Compute a credit score (production)
+POST {{prod_url}}/credit/score
+Content-Type: application/json
+
+{
+  "borrower_id": {{borrower_id}},
+  "income": 4000,
+  "existing_debt": 500,
+  "payment_history_score": 80
+}
+
+### Retrieve a borrower's credit score (production)
+GET {{prod_url}}/credit/retrieve/{{borrower_id}}

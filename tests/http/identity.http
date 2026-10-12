@@ -1,0 +1,56 @@
+@base_url = http://localhost:8000
+@borrower_id = 1
+@loan_id = 1
+
+### Identity verification (local)
+POST {{base_url}}/identity/verify
+Content-Type: application/json
+
+{
+  "borrower_id": {{borrower_id}},
+  "full_name": "Jane Doe",
+  "date_of_birth": "1990-01-15",
+  "id_type": "passport",
+  "id_number": "A12345678"
+}
+
+### KYC submission (local)
+POST {{base_url}}/identity/kyc
+Content-Type: application/json
+
+{
+  "borrower_id": {{borrower_id}},
+  "full_name": "Jane Doe",
+  "address": "123 Main St, Lagos",
+  "country": "NG",
+  "document_url": "https://example.com/docs/id.png"
+}
+
+################################################################
+# Production testing
+################################################################
+@prod_url = https://<railway-app>.up.railway.app
+
+### Identity verification (production)
+POST {{prod_url}}/identity/verify
+Content-Type: application/json
+
+{
+  "borrower_id": {{borrower_id}},
+  "full_name": "Jane Doe",
+  "date_of_birth": "1990-01-15",
+  "id_type": "passport",
+  "id_number": "A12345678"
+}
+
+### KYC submission (production)
+POST {{prod_url}}/identity/kyc
+Content-Type: application/json
+
+{
+  "borrower_id": {{borrower_id}},
+  "full_name": "Jane Doe",
+  "address": "123 Main St, Lagos",
+  "country": "NG",
+  "document_url": "https://example.com/docs/id.png"
+}

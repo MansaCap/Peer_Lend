@@ -1,0 +1,112 @@
+@base_url = http://localhost:8000
+@borrower_id = 1
+@loan_id = 1
+
+### Apply for a loan (local)
+POST {{base_url}}/loan/apply
+Content-Type: application/json
+
+{
+  "borrower_id": {{borrower_id}},
+  "amount": 1000,
+  "term_months": 6
+}
+
+### Approve a loan (local)
+POST {{base_url}}/loan/approve
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}}
+}
+
+### Disburse a loan (local)
+POST {{base_url}}/loan/disburse
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}},
+  "amount": 1000
+}
+
+### Repay a loan (local)
+POST {{base_url}}/loan/repay
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}},
+  "amount": 200
+}
+
+### Mark a loan as defaulted (local)
+POST {{base_url}}/loan/default
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}}
+}
+
+### Liquidate collateral (local)
+POST {{base_url}}/loan/liquidate
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}}
+}
+
+################################################################
+# Production testing
+################################################################
+@prod_url = https://<railway-app>.up.railway.app
+
+### Apply (production)
+POST {{prod_url}}/loan/apply
+Content-Type: application/json
+
+{
+  "borrower_id": {{borrower_id}},
+  "amount": 1000,
+  "term_months": 6
+}
+
+### Approve (production)
+POST {{prod_url}}/loan/approve
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}}
+}
+
+### Disburse (production)
+POST {{prod_url}}/loan/disburse
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}},
+  "amount": 1000
+}
+
+### Repay (production)
+POST {{prod_url}}/loan/repay
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}},
+  "amount": 200
+}
+
+### Default (production)
+POST {{prod_url}}/loan/default
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}}
+}
+
+### Liquidate (production)
+POST {{prod_url}}/loan/liquidate
+Content-Type: application/json
+
+{
+  "loan_id": {{loan_id}}
+}
