@@ -82,6 +82,18 @@ Requires [Poetry](https://python-poetry.org/docs/#installation) and Python 3.11.
 poetry install
 ```
 
+**Database Migrations**
+
+Configure your MySQL connection parameters in `.env` (or via `DATABASE_URL`), then manage database migrations using Alembic:
+
+```bash
+# Generate a new migration script
+alembic revision --autogenerate -m "init"
+
+# Apply migrations to update the database to the latest revision
+alembic upgrade head
+```
+
 **Run the API server**
 
 ```bash

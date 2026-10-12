@@ -7,3 +7,11 @@ lightgbm
 xgboost
 mlflow
 mysql-connector-python
+passlib[bcrypt]
+bcrypt==4.0.1
+python-jose[cryptography]
+python-multipart
+sqlalchemy
+pymysql
+alembic
+python-dotenv

@@ -4,6 +4,7 @@ from routers.loans import router as loans_router
 from routers.collateral import router as collateral_router
 from routers.identity import router as identity_router
 from routers.credit import router as credit_router
+from auth.auth import router as auth_router
 
 app = FastAPI(
     title="Pulse Lending API",
@@ -12,6 +13,7 @@ app = FastAPI(
 )
 
 # --- Route Groups ---
+app.include_router(auth_router)
 app.include_router(identity_router, prefix="/identity", tags=["Identity"])
 app.include_router(collateral_router, prefix="/collateral", tags=["Collateral"])
 app.include_router(credit_router, prefix="/credit", tags=["Credit"])
