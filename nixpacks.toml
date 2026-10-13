@@ -1,0 +1,20 @@
+# Build and start configuration for the peer lending backend application. #
+# This configuration file defines the setup, installation, build, and start phases for the peer lending backend application. #
+# Railway deployment configuration for the peer lending backend application. #
+
+[phases.setup]
+nixPkgs = ["python311", "pip", "mysql-client"]
+
+[phases.install]
+cmds = [
+  "pip install -r requirements.txt",
+  "pip install alembic python-jose[cryptography] passlib[bcrypt] pymysql"
+]
+
+[phases.build]
+cmds = [
+  "alembic upgrade head"
+]
+
+[start]
+cmd = "uvicorn peer_lending_backend.src.app.main:app --host 0.0.0.0 --port 8000"
