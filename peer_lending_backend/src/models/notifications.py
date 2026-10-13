@@ -3,7 +3,10 @@ import enum
 from datetime import datetime
 from sqlalchemy import Column, Integer, BigInteger, String, Text, Boolean, DateTime, ForeignKey, Enum
 from sqlalchemy.orm import relationship
-from db.database import Base
+try:
+    from db.database import Base
+except ModuleNotFoundError:
+    from peer_lending_backend.src.db.database import Base
 
 
 class NotificationChannel(str, enum.Enum):

@@ -1,39 +1,45 @@
-# peer_lending_backend/src/security/security.py
-
+import os
 from datetime import datetime, timedelta
 from typing import Optional
-from jose import jwt, JWTError
+
+from jose import JWTError, jwt
 from passlib.context import CryptContext
 
-SECRET_KEY = "CHANGE_THIS_TO_A_256_BIT_SECRET"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
-REFRESH_TOKEN_EXPIRE_DAYS = 7
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-pwd_context = CryptContext(
-    schemes=["bcrypt", "argon2"],
-    deprecated="auto"
-)
+JWT_ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
 
-def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
+
+def _secret_key() -> str:
+    key = os.getenv("JWT_SECRET_KEY")
+    if not key:
+        raise RuntimeError("JWT_SECRET_KEY environment variable is not set")
+    return key
+
 
 def hash_password(password: str) -> str:
     return pwd_context.hash(password)
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
-    to_encode = data.copy()
-    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
-    to_encode.update({"exp": expire})
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
-def create_refresh_token(data: dict):
-    expire = datetime.utcnow() + timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
-    to_encode = {**data, "exp": expire, "type": "refresh"}
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+def verify_password(plain_password: str, hashed_password: Optional[str]) -> bool:
+    if not hashed_password:
+        return False
+    return pwd_context.verify(plain_password, hashed_password)
 
-def decode_token(token: str):
+
+def create_access_token(subject: str, expires_delta: Optional[timedelta] = None) -> str:
+    expire = datetime.utcnow() + (
+        expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    )
+    payload = {"sub": subject, "exp": expire}
+    return jwt.encode(payload, _secret_key(), algorithm=JWT_ALGORITHM)
+
+
+def verify_token(token: str) -> Optional[str]:
+    """Return the token subject (email) if valid, otherwise None."""
     try:
-        return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, _secret_key(), algorithms=[JWT_ALGORITHM])
     except JWTError:
         return None
+    return payload.get("sub")

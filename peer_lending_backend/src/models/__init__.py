@@ -1,5 +1,9 @@
 # Models package initialization #
-from db.database import Base
+try:
+    from db.database import Base
+except ModuleNotFoundError:
+    from peer_lending_backend.src.db.database import Base
+
 from .users import User
 from .loans import Loan
 from .collateral import Collateral

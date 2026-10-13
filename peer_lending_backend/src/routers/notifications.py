@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from peer_lending_backend.src.supabase_client import supabase
+from peer_lending_backend.src.db.supabase_client import supabase
 
 router = APIRouter(prefix="/api", tags=["notifications"])
 

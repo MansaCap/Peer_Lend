@@ -1,6 +1,9 @@
 # SQL Alchemy model for the Payback Analysis Tally table #
 from sqlalchemy import Column, Integer, DECIMAL
-from db.database import Base
+try:
+    from db.database import Base
+except ModuleNotFoundError:
+    from peer_lending_backend.src.db.database import Base
 
 
 class PaybackAnalysisTally(Base):

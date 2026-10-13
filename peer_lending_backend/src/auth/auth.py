@@ -4,8 +4,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
-from auth.schemas import Token, UserLogin, UserRegister
-from auth.security import (
+from peer_lending_backend.src.schemas.schemas import Token, UserLogin, UserRegister
+from peer_lending_backend.src.security.security import (
     create_access_token,
     hash_password,
     verify_password,
