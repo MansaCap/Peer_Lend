@@ -1,0 +1,32 @@
+
+
+@base_url = http://localhost:8000
+https://peer-lend-production.up.railway.app
+
+
+### Record a Transaction (Local)
+POST {{base_url}}/transactions/record
+Content-Type: application/json
+
+{
+  "loan_id": 1,
+  "type": "repayment",
+  "amount": 250
+}
+
+### Record a Transaction (Production)
+POST {{prod_url}}/transactions/record
+Content-Type: application/json
+
+{
+  "loan_id": 1,
+  "type": "repayment",
+  "amount": 250
+}
+
+
+### List Transactions for Loan (Local)
+GET {{base_url}}/transactions/loan/1
+
+### List Transactions for Loan (Production)
+GET {{prod_url}}/transactions/loan/1

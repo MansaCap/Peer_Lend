@@ -3,7 +3,8 @@
 
 from sqlalchemy import Column, Integer, DECIMAL, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from db.database import Base
+
+from peer_lending_backend.src.db.database import Base
 
 class Transaction(Base):
     __tablename__ = "transactions"

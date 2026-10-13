@@ -1,0 +1,18 @@
+
+
+@base_url = http://localhost:8000
+https://peer-lend-production.up.railway.app
+
+
+### Borrower Risk Profile (Local)
+GET {{base_url}}/risk/borrower/1
+
+### Borrower Risk Profile (Production)
+GET {{prod_url}}/risk/borrower/1
+
+
+### Portfolio Risk Tally (Local)
+GET {{base_url}}/risk/portfolio
+
+### Portfolio Risk Tally (Production)
+GET {{prod_url}}/risk/portfolio

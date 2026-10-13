@@ -1,0 +1,26 @@
+
+
+
+### Local Environment
+@base_url = http://localhost:8000
+
+### Production Environment
+@prod_url = https://your-public-url.up.railway.app
+
+
+### Add Collateral
+POST {{base_url}}/collateral/add
+Content-Type: application/json
+
+{
+  "borrower_id": 1,
+  "type": "vehicle",
+  "value": 15000,
+  "verification_status": "pending"
+}
+
+### List Collateral for Borrower
+GET {{base_url}}/collateral/borrower/1
+
+### Verify Collateral
+POST {{base_url}}/collateral/verify/1

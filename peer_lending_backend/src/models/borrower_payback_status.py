@@ -2,7 +2,7 @@
 from sqlalchemy import Column, Integer, DECIMAL, String, ForeignKey
 from sqlalchemy.orm import relationship
 try:
-    from db.database import Base
+    from peer_lending_backend.src.db.database import Base
 except ModuleNotFoundError:
     from peer_lending_backend.src.db.database import Base
 

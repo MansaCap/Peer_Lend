@@ -9,6 +9,7 @@ from peer_lending_backend.src.schemas.loan_lifecycle import (
     LoanDisburse,
     LoanRepay,
 )
+from peer_lending_backend.src.schemas.loans import LoanCreate
 
 class LoanService:
 
@@ -16,7 +17,7 @@ class LoanService:
         self.repo = LoanRepository()
 
     def apply(self, db: Session, payload: LoanApply):
-        return self.repo.create(db, payload)
+        return self.repo.create(db, LoanCreate(**payload.model_dump()))
 
     def approve(self, db: Session, payload: LoanApprove):
         return self.repo.update_status(db, payload.loan_id, "approved")
