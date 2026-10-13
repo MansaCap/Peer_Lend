@@ -1,0 +1,56 @@
+# Railway API for Loans test
+
+### Local Environment
+@base_url = http://localhost:8000
+
+### Production Environment
+@prod_url = https://peer-lend-production.up.railway.app
+
+
+### Apply for a Loan (Local)
+POST {{base_url}}/loan/apply
+Content-Type: application/json
+
+{
+  "borrower_id": 1,
+  "amount": 5000,
+  "interest_rate": 12.5,
+  "term_months": 12
+}
+
+### Apply for a Loan (Production)
+POST {{prod_url}}/loan/apply
+Content-Type: application/json
+
+{
+  "borrower_id": 1,
+  "amount": 5000,
+  "interest_rate": 12.5,
+  "term_months": 12
+}
+
+
+### Approve Loan
+POST {{base_url}}/loan/approve
+Content-Type: application/json
+
+{
+  "loan_id": 1
+}
+
+### Disburse Loan
+POST {{base_url}}/loan/disburse
+Content-Type: application/json
+
+{
+  "loan_id": 1
+}
+
+### Repay Loan
+POST {{base_url}}/loan/repay
+Content-Type: application/json
+
+{
+  "loan_id": 1,
+  "amount": 250
+}

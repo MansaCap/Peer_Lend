@@ -2,14 +2,22 @@
 # These models define the structure of identity verification and KYC-related data for API requests and responses.
 
 
-from pydantic import BaseModel
+from datetime import date
 
-class IdentityVerify(BaseModel):
-    user_id: int
-    document_type: str
-    document_number: str
+from pydantic import BaseModel, HttpUrl
 
-class IdentityKYC(BaseModel):
-    user_id: int
-    country: str
+
+class IdentityVerifyRequest(BaseModel):
+    borrower_id: int
+    full_name: str
+    date_of_birth: date
+    id_type: str
     id_number: str
+
+
+class IdentityKYCRequest(BaseModel):
+    borrower_id: int
+    full_name: str
+    address: str
+    country: str
+    document_url: HttpUrl

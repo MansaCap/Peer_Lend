@@ -2,7 +2,8 @@
 
 from sqlalchemy import Column, Integer, String, DECIMAL, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
-from db.database import Base
+
+from peer_lending_backend.src.db.database import Base
 
 class Collateral(Base):
     __tablename__ = "collateral"

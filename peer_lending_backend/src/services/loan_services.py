@@ -1,8 +1,14 @@
 # Service class for managing Loan operations using the LoanRepository #
 
 from sqlalchemy.orm import Session
-from repositories.loan_repository import LoanRepository
-from schemas.loan_lifecycle import LoanApply, LoanApprove, LoanDisburse, LoanRepay
+
+from peer_lending_backend.src.repositories.loan_repository import LoanRepository
+from peer_lending_backend.src.schemas.loan_lifecycle import (
+    LoanApply,
+    LoanApprove,
+    LoanDisburse,
+    LoanRepay,
+)
 
 class LoanService:
 

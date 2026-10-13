@@ -1,8 +1,9 @@
 # Repository class for managing Collateral entities in the database using SQLAlchemy #
 
 from sqlalchemy.orm import Session
-from models.collateral import Collateral
-from schemas.collateral import CollateralCreate
+
+from peer_lending_backend.src.models.collateral import Collateral
+from peer_lending_backend.src.schemas.collateral import CollateralCreate
 
 class CollateralRepository:
     def create(self, db: Session, payload: CollateralCreate):

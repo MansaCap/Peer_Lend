@@ -1,27 +1,25 @@
-# Router for managing credit score-related operations, including scoring and re                         trieving credit scores for borrowers. #
-# This router provides endpoints for scoring a borrower's credit and retrieving their credit score. #
+# Router for demo credit scoring and retrieving recently computed scores.
 
+from fastapi import APIRouter, HTTPException, status
 
-from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
-from db.database import get_db
-
-from services.credit_service import CreditService
-from schemas.credit import CreditScoreRequest
+from peer_lending_backend.src.schemas.credit import CreditScoreRequest
+from peer_lending_backend.src.services.credit_service import CreditService
 
 router = APIRouter()
 service = CreditService()
 
+
 @router.post("/score")
-def score(payload: CreditScoreRequest, db: Session = Depends(get_db)):
-    return service.score(db, payload)
+def score(payload: CreditScoreRequest):
+    return service.score(payload)
+
 
 @router.get("/retrieve/{borrower_id}")
-def retrieve_score(borrower_id: int, db: Session = Depends(get_db)):
-    payload = CreditScoreRequest(borrower_id=borrower_id)
-    return service.score(db, payload)
-
-@router.get("/retrieve/{borrower_id}")
-def retrieve_score(borrower_id: int, db: Session = Depends(get_db)):
-    payload = CreditScoreRequest(borrower_id=borrower_id)
-    return service.score(db, payload)
+def retrieve_score(borrower_id: int):
+    result = service.retrieve(borrower_id)
+    if result is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No score has been calculated for this borrower in this process",
+        )
+    return result

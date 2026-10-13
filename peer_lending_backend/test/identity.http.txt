@@ -1,0 +1,29 @@
+#Railway
+
+
+### Local Environment
+@base_url = http://localhost:8000
+
+### Production Environment
+https://peer-lend-production.up.railway.app
+
+
+### Verify Identity
+POST {{base_url}}/identity/verify
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "document_type": "passport",
+  "document_number": "A1234567"
+}
+
+### KYC Check
+POST {{base_url}}/identity/kyc
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "country": "CO",
+  "id_number": "123456789"
+}

@@ -1,8 +1,9 @@
 # Repository class for managing Loan entities in the database using SQLAlchemy #
 
 from sqlalchemy.orm import Session
-from models.loans import Loan
-from schemas.loan import LoanCreate
+
+from peer_lending_backend.src.models.loans import Loan
+from peer_lending_backend.src.schemas.loans import LoanCreate
 
 class LoanRepository:
     def create(self, db: Session, payload: LoanCreate):

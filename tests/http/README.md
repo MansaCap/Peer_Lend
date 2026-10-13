@@ -5,7 +5,7 @@
 ## Running requests
 
 1. Install the **REST Client** extension (`humao.rest-client`) in VS Code.
-2. Start the API, e.g. `uvicorn app.main:app --reload --port 8000` from `peer_lending_backend/src`.
+2. Start the API from the repository root with `poetry run uvicorn peer_lending_backend.src.app.main:app --reload --port 8000`.
 3. Open a `.http` file and click **Send Request** above a request (or press `Ctrl+Alt+R`).
 
 Requests are separated by `###`. Variables (`@base_url`, `@borrower_id`, `@loan_id`) are declared at the top of each file; edit them to change test data.

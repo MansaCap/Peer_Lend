@@ -1,6 +1,7 @@
 # SQL Alchemy model for the User table #
 from sqlalchemy import Column, Integer, String, DateTime
-from db.database import Base
+
+from peer_lending_backend.src.db.database import Base
 
 class User(Base):
     __tablename__ = "users"

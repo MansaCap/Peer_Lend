@@ -11,9 +11,9 @@ from peer_lending_backend.src.security.security import (
     verify_password,
     verify_token,
 )
-from db.database import get_db
-from models.users import User
-from schemas.users import UserResponse
+from peer_lending_backend.src.db.database import get_db
+from peer_lending_backend.src.models.users import User
+from peer_lending_backend.src.schemas.users import UserResponse
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
