@@ -1,36 +1,24 @@
-from fastapi import APIRouter, HTTPException, Query
-from pydantic import BaseModel, Field
+# Router for managing collateral-related operations, including adding, listing, and verifying collateral. #
+# This router provides endpoints for adding new collateral, listing collateral for a specific borrower, and verifying collateral. #
 
-from peer_lending_backend.src.db.supabase_client import supabase
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from db.database import get_db
 
-router = APIRouter(prefix="/api/collateral", tags=["collateral"])
+from services.collateral_service import CollateralService
+from schemas.collateral import CollateralCreate
 
+router = APIRouter()
+service = CollateralService()
 
-class CollateralCreate(BaseModel):
-    loan_id: int
-    description: str
-    value: float = Field(gt=0)
+@router.post("/add")
+def add_collateral(payload: CollateralCreate, db: Session = Depends(get_db)):
+    return service.add_collateral(db, payload)
 
+@router.get("/borrower/{borrower_id}")
+def list_collateral(borrower_id: int, db: Session = Depends(get_db)):
+    return service.list_for_borrower(db, borrower_id)
 
-@router.get("")
-def list_collateral(loan_id: int | None = Query(default=None)):
-    query = supabase.table("collateral").select("*")
-    if loan_id is not None:
-        query = query.eq("loan_id", loan_id)
-    return query.execute().data or []
-
-
-@router.get("/{collateral_id}")
-def get_collateral(collateral_id: int):
-    response = supabase.table("collateral").select("*").eq("id", collateral_id).execute()
-    if not response.data:
-        raise HTTPException(status_code=404, detail="Collateral not found")
-    return response.data[0]
-
-
-@router.post("", status_code=201)
-def create_collateral(item: CollateralCreate):
-    response = supabase.table("collateral").insert(item.model_dump()).execute()
-    if not response.data:
-        raise HTTPException(status_code=400, detail="Collateral not created")
-    return response.data[0]
+@router.post("/verify/{collateral_id}")
+def verify_collateral(collateral_id: int, db: Session = Depends(get_db)):
+    return service.verify(db, collateral_id)
